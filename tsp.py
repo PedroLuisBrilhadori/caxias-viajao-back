@@ -1,30 +1,9 @@
 from pymprog import var, iprod, begin, minimize, solve, end
 import numpy as np
 from models import TspRoute
-# Dados de entrada
-coordenadas = [
-    [27, 45],
-    [5, 96],
-    [4, 87],
-    [67, 5],
-    [77, 100],
-    [96, 24],
-    [78, 68],
-    [91, 64],
-    [15, 26],
-    [27, 45]
-]
-
-
 
 def euclidian_distance(i, j, nodes):
     return np.sqrt((nodes[i][0] - nodes[j][0]) ** 2 + (nodes[i][1] - nodes[j][1]) ** 2)
-
-tempoDeServico = [0, 9, 7, 8, 20 ,11, 17, 6, 7]
-
-deadline = [0, 430, 17, 449, 490, 428, 535, 28, 419]
-
-M = sum(deadline) + 10
 
 def restricoes(n, x): 
     # Restrições
@@ -35,7 +14,7 @@ def restricoes(n, x):
         sum(x[i, j] for j in range(1, n) if i != j) == 1
     return x
 
-def exclude_sub_routes(n, x, z, phi): 
+def exclude_sub_routes(n, x, z, phi, M, coordenadas, tempoDeServico, deadline): 
     # Eliminação de sub-rotas
     for i in range(n-1):
         for j in range(1, n):
@@ -46,7 +25,7 @@ def exclude_sub_routes(n, x, z, phi):
 
     return (x, z, phi)
 
-def get_routes(n, x): 
+def get_routes(n, x, coordenadas): 
     routes = []
 
     for i in range(n-1):
@@ -79,14 +58,36 @@ def get_tsp_routes():
     # Variável que representa o instante de início do tempo de serviço, realizando o acumulo de tempo decorrido
     phi = var("phi", n) 
 
+    # Dados de entrada
+    coordenadas = [
+        [27, 45],
+        [5, 96],
+        [4, 87],
+        [67, 5],
+        [77, 100],
+        [96, 24],
+        [78, 68],
+        [91, 64],
+        [15, 26],
+        [27, 45]
+    ]
+
+    tempoDeServico = [0, 9, 7, 8, 20 ,11, 17, 6, 7]
+
+    deadline = [0, 430, 17, 449, 490, 428, 535, 28, 419]
+
+    M = sum(deadline) + 10
+
     # Modelo / Função Objetivo
     minimize(sum(z[j] for j in range(1, n-1))) 
 
     x = restricoes(n, x)
 
-    x, z, phi = exclude_sub_routes(n, x, z, phi)
+    x, z, phi = exclude_sub_routes(n, x, z, phi, M, coordenadas, tempoDeServico, deadline)
 
     solve()
     end()
+    
     tspRoutes = get_routes(n, x)
+
     return tspRoutes
