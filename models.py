@@ -6,8 +6,8 @@ class TspRoute:
     y: float
 
     def __init__(self, id, targetId, x, y):
-        self.id = id
-        self.label = id
-        self.targetId = targetId
+        self.id = str(id)
+        self.label = str(id)
+        self.targetId = str(targetId)
         self.x = x
         self.y = y

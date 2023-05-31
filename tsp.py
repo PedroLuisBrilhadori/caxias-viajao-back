@@ -1,47 +1,13 @@
-from pymprog import var, iprod, begin, minimize, solve, end
+from pymprog import iprod, begin, minimize, solve, end, var
 from models import TspRoute
-from utils import euclidian_distance
+from utils import euclidian_distance, read_file
 
-def variables(): 
-    # Variáveis de decisão
-    n = len(coordenadas)
-    
-    prod = iprod(range(n), range(n))
-    x = var("x", prod, bool)
-    # Quantifica o atraso em cada nó
-    z = var("z", n) 
-    
-    # Variável que representa o instante de início do tempo de serviço, realizando o acumulo de tempo decorrido
-    phi = var("phi", n) 
-
-    # Dados de entrada
-    coordenadas = [
-        [27, 45],
-        [5, 96],
-        [4, 87],
-        [67, 5],
-        [77, 100],
-        [96, 24],
-        [78, 68],
-        [91, 64],
-        [15, 26],
-        [27, 45]
-    ]
-
-    tempoDeServico = [0, 9, 7, 8, 20 ,11, 17, 6, 7]
-
-    deadline = [0, 430, 17, 449, 490, 428, 535, 28, 419]
-
-    M = sum(deadline) + 10
-
-    return (n, x, z, phi, coordenadas, tempoDeServico, deadline, M)
-
-def get_tsp_routes(): 
-    n, x, z, phi, coordenadas, tempoDeServico, deadline, M = variables()
-
+def get_tsp_routes(file): 
     tspRoutes = []
 
     begin("caixeiro") # Início do modelo
+
+    n, x, z, phi, coordenadas, tempoDeServico, deadline, M = variables(file)
 
     # Modelo / Função Objetivo
     minimize(sum(z[j] for j in range(1, n-1))) 
@@ -53,9 +19,30 @@ def get_tsp_routes():
     solve()
     end()
     
-    tspRoutes = get_routes(n, x)
+    tspRoutes = get_routes(n, x, coordenadas)
 
     return tspRoutes
+
+def variables(file): 
+    coordenadas, tempoDeServico, deadline = read_file(file)
+
+    # Variáveis de decisão
+    n = len(coordenadas)
+    
+    prod = iprod(range(n), range(n))
+
+    x = var("x", prod, bool)
+    # Quantifica o atraso em cada nó
+    z = var("z", n) 
+    
+    # Variável que representa o instante de início do tempo de serviço, realizando o acumulo de tempo decorrido
+    phi = var("phi", n) 
+
+    M = sum(deadline) + 10
+
+
+
+    return (n, x, z, phi, coordenadas, tempoDeServico, deadline, M)
 
 
 def restricoes(n, x): 
@@ -80,6 +67,7 @@ def exclude_sub_routes(n, x, z, phi, M, coordenadas, tempoDeServico, deadline):
 
 def get_routes(n, x, coordenadas): 
     routes = []
+    expand = 3
 
     for i in range(n-1):
         for j in range(1, n):
@@ -89,7 +77,7 @@ def get_routes(n, x, coordenadas):
                 if j == (n - 1):
                     target = 0
 
-                route = TspRoute(i, target, coordenadas[i][0], coordenadas[i][1])
+                route = TspRoute(i, target, coordenadas[i][0] * expand, coordenadas[i][1] * expand).__dict__
                 routes.append(route)
 
     return routes
