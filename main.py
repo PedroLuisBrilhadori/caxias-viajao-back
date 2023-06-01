@@ -5,7 +5,7 @@ from tsp import*
 app = Flask(__name__)
 CORS(app)
 
-
+# TODO: body validator
 @app.route('/routes', methods=['POST'])
 def routes():   
     cache = request.json['cache']

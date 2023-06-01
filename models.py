@@ -2,8 +2,8 @@ class TspRoute:
     id: str
     label: str
     targetId: str
-    x: float
-    y: float
+    x: int
+    y: int
 
     def __init__(self, id, targetId, x, y):
         self.id = str(id)
