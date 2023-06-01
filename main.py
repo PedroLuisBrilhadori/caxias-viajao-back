@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
 from tsp import*
 
@@ -6,9 +6,13 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/routes')
-def routes():
-    dados = get_tsp_routes('./public/inst_10.txt')
+@app.route('/routes', methods=['POST'])
+def routes():   
+    cache = request.json['cache']
+    data = request.json['data']
+    name = request.json['name']
+
+    dados = get_tsp_routes(data, name, cache)
     
     return dados
 

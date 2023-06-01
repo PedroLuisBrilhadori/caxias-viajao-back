@@ -1,13 +1,36 @@
 from pymprog import iprod, begin, minimize, solve, end, var
 from models import TspRoute
-from utils import euclidian_distance, read_file
+from utils import euclidian_distance, read_string, writeCache
+import json
 
-def get_tsp_routes(file): 
+
+def get_tsp_routes(data, name, cache = True): 
+    if cache: 
+        return get_tsp_cache(name)
+
+    return calc_tsp_routes(data, name)        
+
+
+def get_tsp_cache(name): 
+    with open(f'./public/{name}.json') as file: 
+        return json.load(file)
+
+
+def calc_tsp_routes(data, name): 
     tspRoutes = []
 
     begin("caixeiro") # Início do modelo
 
-    n, x, z, phi, coordenadas, tempoDeServico, deadline, M = variables(file)
+    n, coordenadas, tempoDeServico, deadline, M = variables(data)
+
+    prod = iprod(range(n), range(n))
+
+    x = var("x", prod, bool)
+    # Quantifica o atraso em cada nó
+    z = var("z", n) 
+    
+    # Variável que representa o instante de início do tempo de serviço, realizando o acumulo de tempo decorrido
+    phi = var("phi", n) 
 
     # Modelo / Função Objetivo
     minimize(sum(z[j] for j in range(1, n-1))) 
@@ -21,28 +44,20 @@ def get_tsp_routes(file):
     
     tspRoutes = get_routes(n, x, coordenadas)
 
+    writeCache(f'./public/{name}.json', tspRoutes)
+
     return tspRoutes
 
-def variables(file): 
-    coordenadas, tempoDeServico, deadline = read_file(file)
+def variables(data): 
+    coordenadas, tempoDeServico, deadline = read_string(data)
 
     # Variáveis de decisão
     n = len(coordenadas)
-    
-    prod = iprod(range(n), range(n))
 
-    x = var("x", prod, bool)
-    # Quantifica o atraso em cada nó
-    z = var("z", n) 
-    
-    # Variável que representa o instante de início do tempo de serviço, realizando o acumulo de tempo decorrido
-    phi = var("phi", n) 
 
     M = sum(deadline) + 10
 
-
-
-    return (n, x, z, phi, coordenadas, tempoDeServico, deadline, M)
+    return (n, coordenadas, tempoDeServico, deadline, M)
 
 
 def restricoes(n, x): 
