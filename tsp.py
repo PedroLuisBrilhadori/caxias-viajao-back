@@ -1,7 +1,8 @@
 from pymprog import iprod, begin, minimize, solve, end, var
-from models import TspRoute
+from models import TspRoute, TspResponse
 from utils import euclidian_distance, read_string, writeCache
 import json
+from time import time
 
 
 def get_tsp_routes(data, name, cache = True): 
@@ -15,14 +16,16 @@ def get_tsp_routes(data, name, cache = True):
 
 
 def get_tsp_cache(name): 
-    with open(f'./public/{name}.json') as file: 
+    with open(f'./public/cache/{name}.json') as file: 
         return json.load(file)
 
 
 def calc_tsp_routes(data, name): 
     tspRoutes = []
 
-    begin("caixeiro") # Início do modelo
+    initial_time = time(); 
+
+    begin(f'caixeiro - {initial_time}') # Início do modelo
 
     n, coordenadas, tempoDeServico, deadline, M = variables(data)
 
@@ -45,11 +48,16 @@ def calc_tsp_routes(data, name):
     solve()
     end()
     
+    final_time = time()
+
     tspRoutes = get_routes(n, x, coordenadas)
 
-    writeCache(f'./public/{name}.json', tspRoutes)
+    
+    exec_time = final_time - initial_time
+    response =  TspResponse(tspRoutes, exec_time).__dict__
 
-    return tspRoutes
+    writeCache(f'./public/cache/{name}.json', response)
+    return response
 
 def variables(data): 
     coordenadas, tempoDeServico, deadline = read_string(data)

@@ -1,9 +1,10 @@
 from flask import Flask, request
 from flask_cors import CORS
-from tsp import*
+from tsp import get_tsp_routes
 
 app = Flask(__name__)
-CORS(app)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
+
 
 # TODO: body validator
 @app.route('/routes', methods=['POST'])
