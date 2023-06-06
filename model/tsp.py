@@ -1,4 +1,4 @@
-from pymprog import iprod, begin, minimize, solve, end, var, solver
+from pymprog import iprod, begin, minimize, solve, end, var, solver, vobj
 from time import time
 from model.response import generate_response
 from model.variables import variables
@@ -52,11 +52,13 @@ def calc_tsp_routes(data, name):
     solver(int, tm_lim = 3600 * 1000)
 
     solve()
+    great_value = vobj()
     end()
     
     final_time = time()
 
-    return generate_response(name, n, x, coordenadas, final_time, initial_time)
+
+    return generate_response(name, n, x, coordenadas, final_time, initial_time, great_value)
 
 
 

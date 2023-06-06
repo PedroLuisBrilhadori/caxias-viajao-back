@@ -2,12 +2,12 @@ from utils.files import write_cache
 from classes.tsp_response import TspResponse
 from classes.tsp_route import TspRoute
 
-def generate_response(name, n, x, coordenadas, final_time, initial_time): 
+def generate_response(name, n, x, coordenadas, final_time, initial_time, great_value): 
     tspRoutes = get_routes(n, x, coordenadas)
 
     
     exec_time = final_time - initial_time
-    response =  TspResponse(tspRoutes, exec_time).__dict__
+    response =  TspResponse(tspRoutes, exec_time, great_value).__dict__
 
     write_cache(f'./public/cache/{name}.json', response)
 
