@@ -1,14 +1,3 @@
-import numpy as np
-import json
-
-def euclidian_distance(i, j, nodes):
-    return np.sqrt((nodes[i][0] - nodes[j][0]) ** 2 + (nodes[i][1] - nodes[j][1]) ** 2)
-
-def writeCache(file, routes): 
-    with open(file, 'w') as file: 
-        file.write(json.dumps(routes))
-        file.close()
-
 def read_string(string: str): 
     lines = string.split('\n')
 

@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_cors import CORS
-from tsp import get_tsp_routes
+from model.tsp import get_tsp_routes
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
