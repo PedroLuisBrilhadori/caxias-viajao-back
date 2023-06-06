@@ -6,7 +6,10 @@ import json
 
 def get_tsp_routes(data, name, cache = True): 
     if cache: 
-        return get_tsp_cache(name)
+        try:
+            return get_tsp_cache(name)
+        except: 
+            print('no')
 
     return calc_tsp_routes(data, name)        
 
