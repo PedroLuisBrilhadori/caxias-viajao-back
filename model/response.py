@@ -10,6 +10,7 @@ def generate_response(name, n, x, coordenadas, final_time, initial_time, great_v
     response =  TspResponse(tspRoutes, exec_time, great_value).__dict__
 
     write_cache(f'./public/cache/{name}.json', response)
+    return response
 
 
 def get_routes(n, x, coordenadas): 
