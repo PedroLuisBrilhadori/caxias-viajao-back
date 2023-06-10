@@ -8,4 +8,5 @@ def write_cache(file, routes):
 def read_file(file): 
       with open(file) as f:
         data = f.read()
+        f.close()
         return data

@@ -1,19 +1,19 @@
 {
   "routes": [
-    { "id": "0", "label": "0", "targetId": "8", "x": 276, "y": 228 },
-    { "id": "1", "label": "1", "targetId": "5", "x": 9, "y": 84 },
-    { "id": "2", "label": "2", "targetId": "6", "x": 126, "y": 69 },
-    { "id": "3", "label": "3", "targetId": "1", "x": 183, "y": 210 },
-    { "id": "4", "label": "4", "targetId": "0", "x": 276, "y": 144 },
-    { "id": "5", "label": "5", "targetId": "2", "x": 123, "y": 69 },
-    { "id": "6", "label": "6", "targetId": "7", "x": 105, "y": 87 },
-    { "id": "7", "label": "7", "targetId": "13", "x": 117, "y": 258 },
-    { "id": "8", "label": "8", "targetId": "9", "x": 168, "y": 207 },
-    { "id": "9", "label": "9", "targetId": "11", "x": 108, "y": 240 },
-    { "id": "10", "label": "10", "targetId": "3", "x": 192, "y": 63 },
-    { "id": "11", "label": "11", "targetId": "12", "x": 96, "y": 9 },
-    { "id": "12", "label": "12", "targetId": "10", "x": 105, "y": 39 },
-    { "id": "13", "label": "13", "targetId": "4", "x": 246, "y": 237 }
+    { "id": "0", "label": "0", "targetId": "8", "x": 92, "y": 76 },
+    { "id": "1", "label": "1", "targetId": "5", "x": 3, "y": 28 },
+    { "id": "2", "label": "2", "targetId": "6", "x": 42, "y": 23 },
+    { "id": "3", "label": "3", "targetId": "1", "x": 61, "y": 70 },
+    { "id": "4", "label": "4", "targetId": "0", "x": 92, "y": 48 },
+    { "id": "5", "label": "5", "targetId": "2", "x": 41, "y": 23 },
+    { "id": "6", "label": "6", "targetId": "7", "x": 35, "y": 29 },
+    { "id": "7", "label": "7", "targetId": "13", "x": 39, "y": 86 },
+    { "id": "8", "label": "8", "targetId": "9", "x": 56, "y": 69 },
+    { "id": "9", "label": "9", "targetId": "11", "x": 36, "y": 80 },
+    { "id": "10", "label": "10", "targetId": "3", "x": 64, "y": 21 },
+    { "id": "11", "label": "11", "targetId": "12", "x": 32, "y": 3 },
+    { "id": "12", "label": "12", "targetId": "10", "x": 35, "y": 13 },
+    { "id": "13", "label": "13", "targetId": "4", "x": 82, "y": 79 }
   ],
   "exec_time": 3600.079663038254,
   "great_value": 77.27773380940107
