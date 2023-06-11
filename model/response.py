@@ -15,7 +15,7 @@ def generate_response(name, n, x, coordenadas, final_time, initial_time, great_v
 
 def get_routes(n, x, coordenadas): 
     routes = []
-    expand = 3
+    expand = 1
 
     for i in range(n-1):
         for j in range(1, n):

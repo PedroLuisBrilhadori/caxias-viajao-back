@@ -15,22 +15,25 @@ def generate_graph(json_data, name):
     first_id = ''
     
     for route in data['routes']:
-        color = 'red' 
+        color = 'black' 
+
         
         if route['id'] == '0': 
             color = 'green'
             first_id = route['targetId']
-        
+
         if route['id'] == first_id: 
-            color = 'blue'
+            color = 'gold'
 
         if route['targetId'] == '0': 
-            color = 'black'
+            color = 'red'
 
         scatter(route['x'], route['y'], color=color, marker='o', s=100)
 
     for route in data['routes']:
-        x_end, y_end = pontos[route['targetId']]['x'], pontos[route['targetId']]['y']
-        text(x_end, y_end - 0.2, route['label'], ha='center', va='center', color="white", fontsize=8, fontweight='bold')
+        color = 'white'
+
+        x_end, y_end = pontos[route['id']]['x'], pontos[route['id']]['y']
+        text(x_end, y_end - 0.2, route['label'], ha='center', va='center', color=color, fontsize=8, fontweight='bold')
 
     savefig(f'./public/images/{name}')
