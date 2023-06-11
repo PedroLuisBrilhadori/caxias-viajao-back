@@ -55,3 +55,17 @@ When the user makes a request, API send a cached JSON file. The cache can disabl
 ```bash
 python generate-cache.py ./public/inst_10.txt
 ```
+
+---
+
+## Generate Graph
+
+command:
+
+python generate_graph.py [instance name]
+
+> instace name is a public/_.txt name or (_)
+
+```bash
+python generate_graph.py inst_10
+```
