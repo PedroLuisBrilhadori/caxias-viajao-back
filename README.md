@@ -41,7 +41,7 @@ pip install numpy pymprog flask flask-cors
 ### flask api
 
 ```bash
-flask --app main run
+flask --app api run
 ```
 
 ### cache generator

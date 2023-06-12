@@ -24,10 +24,13 @@ def get_tsp_cache(name):
 def calc_tsp_routes(data, name): 
     initial_time = time(); 
 
-    begin(f'caixeiro - {initial_time}') # Início do modelo
+    coordenadas, tempoDeServico, deadline = read_string(data)
 
-    n, coordenadas, tempoDeServico, deadline, M = variables(data)
-    print(n, coordenadas, tempoDeServico, deadline, M)
+    n = len(coordenadas)
+
+    M = sum(deadline) + 10
+
+    begin(f'caixeiro - {initial_time}') # Início do modelo
 
     prod = iprod(range(n), range(n))
 
